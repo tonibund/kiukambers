@@ -648,18 +648,6 @@ p + p { margin-top: 14px; }
   .ransom span { border-width: 2px; box-shadow: 3px 3px 0 var(--ink); }
   .hero-lead { font-size: 19px; }
 
-  /* Startseite: ganzes Bandfoto oben, Titel darunter */
-  .hero-full {
-    min-height: auto;
-    background:
-      linear-gradient(180deg, rgba(20, 21, 43, 0.45) 0%, rgba(20, 21, 43, 0) 80px,
-                      rgba(20, 21, 43, 0) calc(66.7vw - 70px), var(--ink) 66.7vw),
-      url("img/band.jpg") center top / 100% auto no-repeat,
-      var(--ink);
-  }
-  .hero-full { min-height: 100vh; min-height: 100svh; }
-  .hero-full .hero-content { margin: auto; padding-top: calc(66.7vw - 190px); padding-bottom: 40px; }
-
   .sections { gap: 28px; padding-top: 28px; }
   .panel { padding: 24px 18px; box-shadow: 5px 5px 0 var(--ink); }
   .panel-head { gap: 12px; margin-bottom: 20px; }
@@ -692,4 +680,38 @@ p + p { margin-top: 14px; }
   .facts { gap: 14px; }
   .fact:nth-child(n) { transform: none; }
   .flyer { max-width: 100%; }
+}
+
+/* Hochformat (Handy, Tablet): ganzes Bandfoto mit allen Gesichtern zeigen */
+@media (max-width: 520px), (max-width: 1024px) and (orientation: portrait) {
+  /* Startseite: scharfes Bandfoto (alle Gesichter) unter der Kopfzeile,
+     dahinter dasselbe Foto unscharf über das ganze Display erweitert.
+     Kopfzeile = 76px hoch, Foto = volle Breite (Seitenverhältnis 3:2). */
+  .hero-full {
+    min-height: 100vh;
+    min-height: 100svh;
+    background: var(--ink);
+    isolation: isolate;
+  }
+  .hero-full::before {
+    content: "";
+    position: absolute;
+    inset: -40px;
+    z-index: -2;
+    background: url("img/band.jpg") center / cover no-repeat;
+    filter: blur(22px) brightness(0.6) saturate(1.2);
+  }
+  .hero-full::after {
+    content: "";
+    position: absolute;
+    top: 76px;
+    left: 0;
+    right: 0;
+    aspect-ratio: 3 / 2;
+    z-index: -1;
+    background: url("img/band.jpg") center / cover no-repeat;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 28px, #000 calc(100% - 70px), transparent);
+            mask-image: linear-gradient(180deg, transparent 0, #000 28px, #000 calc(100% - 70px), transparent);
+  }
+  .hero-full .hero-content { margin: auto; padding-top: calc(66.7vw - 100px); padding-bottom: 40px; }
 }
