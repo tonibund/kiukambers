@@ -1,3 +1,26 @@
+// Handy-Menü: Burger-Knopf klappt die Navigation auf und zu.
+(function () {
+  var btn = document.querySelector('.menu-btn');
+  var nav = document.querySelector('.nav');
+  if (!btn || !nav) return;
+  function setOpen(open) {
+    nav.classList.toggle('open', open);
+    btn.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open);
+    btn.setAttribute('aria-label', open ? 'Menü schliessen' : 'Menü öffnen');
+  }
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    setOpen(!nav.classList.contains('open'));
+  });
+  document.addEventListener('click', function (e) {
+    if (!nav.contains(e.target)) setOpen(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') setOpen(false);
+  });
+})();
+
 // Mauszeiger wie bei offspring.com, in Neongrün: grosse Plasma-Energiekugel,
 // die der Maus weich folgt, plus kleiner Punkt. Dazu der Sticker-Titel,
 // der der Maus folgt.
@@ -34,6 +57,12 @@
   dot.className = 'cursor-dot cur-hidden';
   document.body.appendChild(canvas);
   document.body.appendChild(dot);
+
+  // Touch-Bedienung: Mauszeiger-Effekt entfernen
+  document.addEventListener('touchstart', function () {
+    canvas.remove();
+    dot.remove();
+  }, { once: true, passive: true });
 
   var C = SIZE / 2;
   var mx = -400, my = -400;                 // Maus
