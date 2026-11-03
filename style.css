@@ -166,6 +166,7 @@ img { display: block; max-width: 100%; }
 /* Titel unten, damit die Gesichter auf dem Bandfoto frei bleiben */
 .hero-full .hero-content { margin: auto auto 0; padding-bottom: clamp(28px, 5vh, 56px); }
 .hero-full .hero-lead { margin-top: 16px; max-width: none; }
+.end-dot { font-size: 1.35em; line-height: 0; margin-left: 0.04em; }
 .hero-full .btn { margin-top: 22px; }
 .hero .btn { margin-top: 36px; }
 
