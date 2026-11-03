@@ -21,6 +21,92 @@
   });
 })();
 
+// Neongrüner Blitz: nur beim Klick auf den Sticker-Titel der Startseite.
+(function () {
+  var calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var SVG = 'http://www.w3.org/2000/svg';
+
+  // Zickzack-Linie zwischen zwei Punkten (Mittelpunkt-Verschiebung)
+  function jag(a, b, rough, depth) {
+    if (depth === 0) return [a, b];
+    var m = [(a[0] + b[0]) / 2 + (Math.random() - 0.5) * rough,
+             (a[1] + b[1]) / 2 + (Math.random() - 0.5) * rough * 0.3];
+    return jag(a, m, rough / 2, depth - 1).concat(jag(m, b, rough / 2, depth - 1).slice(1));
+  }
+  function toPath(pts) {
+    return 'M' + pts.map(function (p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join('L');
+  }
+  function bolt(hit) {
+    var w = innerWidth, h = innerHeight;
+    var start = [hit[0] + (Math.random() - 0.5) * w * 0.5, -20];
+    var end = [hit[0] + (Math.random() - 0.5) * w * 0.4, h + 20];
+    var main = jag(start, hit, w * 0.35, 6).concat(jag(hit, end, w * 0.3, 6).slice(1));
+    var branches = [];
+    for (var b = 0; b < 5; b++) {
+      var from = main[Math.floor(Math.random() * (main.length - 10)) + 5];
+      var to = [from[0] + (Math.random() - 0.5) * w * 0.5, from[1] + h * (0.1 + Math.random() * 0.25)];
+      branches.push(toPath(jag(from, to, w * 0.12, 4)));
+    }
+    return { main: toPath(main), branches: branches.join(' ') };
+  }
+
+  // Blitz(e) zeichnen; hits = Einschlagpunkte
+  function strike(hits) {
+    var w = innerWidth, h = innerHeight;
+    var svg = document.createElementNS(SVG, 'svg');
+    svg.setAttribute('class', 'bolt');
+    svg.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+    var html = '';
+    hits.forEach(function (hit) {
+      var bo = bolt(hit);
+      html +=
+        '<path class="bolt-glow" d="' + bo.main + ' ' + bo.branches + '"/>' +
+        '<path class="bolt-mid" d="' + bo.main + '"/>' +
+        '<path class="bolt-branch" d="' + bo.branches + '"/>' +
+        '<path class="bolt-core" d="' + bo.main + '"/>';
+    });
+    svg.innerHTML = html;
+    var flash = document.createElement('div');
+    flash.className = 'bolt-flash';
+    document.body.appendChild(flash);
+    document.body.appendChild(svg);
+    setTimeout(function () { svg.remove(); flash.remove(); }, 950);
+  }
+
+  // Überall, wo KIUKAMBERS steht: Sticker-Titel, Schriftzug oben links,
+  // Fusszeile und im Text
+  function zap(el) {
+    if (calm) return;
+    var r = el.getBoundingClientRect();
+    strike([[r.left + r.width * (0.3 + Math.random() * 0.4), r.top + r.height / 2]]);
+    el.classList.remove('zapped');
+    void el.offsetWidth;
+    el.classList.add('zapped');
+  }
+
+  var title = document.querySelector('.ransom');
+  if (title) {
+    title.setAttribute('role', 'button');
+    title.setAttribute('tabindex', '0');
+    title.setAttribute('title', 'Klick mich!');
+    title.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); zap(title); }
+    });
+  }
+
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest && e.target.closest('.ransom, .brand, .zap');
+    if (!el) return;
+    zap(el);
+    // Schriftzug oben links ist ein Link zur Startseite: erst Blitz, dann weiter
+    if (el.classList.contains('brand') && !calm) {
+      e.preventDefault();
+      var href = el.href;
+      setTimeout(function () { location.href = href; }, 650);
+    }
+  });
+})();
+
 // Mauszeiger wie bei offspring.com, in Neongrün: grosse Plasma-Energiekugel,
 // die der Maus weich folgt, plus kleiner Punkt. Dazu der Sticker-Titel,
 // der der Maus folgt.

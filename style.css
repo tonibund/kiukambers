@@ -41,7 +41,7 @@ body {
   overflow-x: clip;
 }
 
-a { color: var(--indigo); }
+a { color: var(--indigo); -webkit-tap-highlight-color: transparent; }
 img { display: block; max-width: 100%; }
 
 .wrap {
@@ -605,9 +605,72 @@ p + p { margin-top: 14px; }
   .cursor-ring, .cursor-dot { display: none; }
 }
 
+/* ============================================================
+   NEONGRÜNER BLITZ beim Klick auf den Titel (siehe script.js)
+   ============================================================ */
+.ransom, .zap { cursor: pointer; -webkit-tap-highlight-color: transparent; user-select: none; }
+.zap { display: inline-block; transition: color 0.15s ease, text-shadow 0.15s ease; }
+.zap:hover { color: #2BD40F; }
+.ransom:focus-visible { outline: 3px dashed #39FF14; outline-offset: 10px; border-radius: 12px; }
+
+.bolt {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99998;
+  pointer-events: none;
+  animation: bolt 0.9s linear forwards;
+}
+.bolt path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.bolt-glow   { stroke: rgba(57, 255, 20, 0.55); stroke-width: 40; filter: blur(14px); }
+.bolt-mid    { stroke: #39FF14; stroke-width: 12; filter: blur(2px); }
+.bolt-branch { stroke: #6BFF4A; stroke-width: 4; }
+.bolt-core   { stroke: #F4FFEE; stroke-width: 4.5; }
+@keyframes bolt {
+  0%   { opacity: 1; }
+  18%  { opacity: 0.3; }
+  26%  { opacity: 1; }
+  40%  { opacity: 0.5; }
+  48%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.bolt-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 99997;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(57, 255, 20, 0.45), rgba(57, 255, 20, 0.15) 70%);
+  mix-blend-mode: screen;
+  animation: bolt-flash 0.8s ease-out forwards;
+}
+@keyframes bolt-flash {
+  0%   { opacity: 1; }
+  15%  { opacity: 0.2; }
+  25%  { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+/* Schriftzug / Wort zuckt beim Einschlag */
+.brand.zapped, .zap.zapped { animation: zap 0.5s ease-out; }
+
+/* Sticker-Buchstaben zucken beim Einschlag */
+.ransom.zapped span { animation: zap 0.5s ease-out; }
+.ransom.zapped span:nth-child(odd)  { animation-delay: 0.02s; }
+.ransom.zapped span:nth-child(3n)   { animation-delay: 0.05s; }
+@keyframes zap {
+  0%   { translate: 0 0; filter: none; }
+  15%  { translate: 0 -14px; filter: drop-shadow(0 0 10px #39FF14) brightness(1.4); }
+  35%  { translate: -4px 4px; }
+  55%  { translate: 3px -3px; filter: drop-shadow(0 0 6px #39FF14); }
+  100% { translate: 0 0; filter: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .nav a:hover { animation: none; }
   .ransom span { transition: none; }
+  .zap { transition: none; }
 }
 
 /* ============================================================
