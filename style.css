@@ -770,7 +770,7 @@ p + p { margin-top: 14px; }
     inset: -40px;
     z-index: -2;
     background: url("img/band.jpg") center / cover no-repeat;
-    filter: blur(22px) brightness(0.6) saturate(1.2);
+    filter: blur(22px) brightness(1.05) saturate(1.15);
   }
   .hero-full::after {
     content: "";
