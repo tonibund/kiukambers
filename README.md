@@ -18,6 +18,7 @@ gehostet mit GitHub Pages.
 | `aktuelles.html` | **Aktuelles:** Liste aller News-Einträge |
 | `kontakt.html` | **Kontakt:** WhatsApp |
 | `aktuelles/*.html` | Eine eigene Seite pro News-Eintrag |
+| `404.html` | Fehlerseite bei falscher Adresse (nutzt feste Pfade `/kiukambers/…`) |
 
 ## Weitere Dateien
 
@@ -31,12 +32,14 @@ gehostet mit GitHub Pages.
 | `favicon.svg`, `favicon.ico`, `img/favicon-*.png`, `img/apple-touch-icon.png` | Icon im Browser-Tab und auf dem Handy-Homescreen |
 | `KIUKAMBERS.png` | Flyer zur Schlagzeugerin-Suche |
 
-Schriften kommen von Google Fonts: Lilita One (Titel), Permanent Marker (Handschrift), Rubik (Text).
+Schriften liegen lokal in `fonts/` (keine Verbindung zu Google): Lilita One (Titel),
+Permanent Marker (Handschrift), Rubik (Text). Lizenz: SIL Open Font License, siehe `fonts/LIZENZ.txt`.
 
 ## Effekte
 
 - **Mauszeiger:** neongrüne Plasma-Kugel mit Punkt, die der Maus folgt (wie bei offspring.com).
-  Nur am Computer; auf Touch-Geräten und bei „Bewegung reduzieren“ aus.
+  Nur am Computer; auf Touch-Geräten und bei „Bewegung reduzieren“ aus. Pausiert nach
+  2,5 Sekunden Stillstand, um Akku zu sparen.
 - **Blitz:** Klick auf „Kiukambers“ (Sticker-Titel, Schriftzug oben links, Fusszeile oder im Text)
   lässt einen neongrünen Blitz durch die Seite schlagen.
 - **Handy:** Burger-Menü, auf der Startseite das ganze Bandfoto mit allen Gesichtern.

@@ -157,7 +157,17 @@
   var dotScale = 1, dotTarget = 1, dotAlpha = 1, dotAlphaTarget = 1;
   var started = false;
 
+  // Sparmodus: steht die Maus ein paar Sekunden still, wird nicht mehr
+  // gezeichnet; bei der nächsten Bewegung geht es weiter.
+  var IDLE_MS = 2500;
+  var lastActive = 0, running = false;
+  function wake() {
+    lastActive = performance.now();
+    if (!running) { running = true; requestAnimationFrame(loop); }
+  }
+
   document.addEventListener('mousemove', function (e) {
+    wake();
     mx = e.clientX;
     my = e.clientY;
     if (!started) {
@@ -178,6 +188,7 @@
       canvas.classList.remove('cur-hidden');
       dot.classList.remove('cur-hidden');
     }
+    wake();
     var onLink = e.target.closest && e.target.closest('a, button');
     ringTarget = onLink ? 10 / 15 : 1;
     ringAlphaTarget = onLink ? 0.5 : 1;
@@ -268,7 +279,7 @@
     ctx.globalCompositeOperation = 'source-over';
   }
 
-  (function loop(now) {
+  function loop(now) {
     var t = (now || 0) / 1000;
     // weich folgen (wie gsap quickTo, 0.5s): Kugel träge, Punkt schneller
     rx += (mx - rx) * 0.1;
@@ -286,6 +297,8 @@
     dot.style.opacity = dotAlpha;
 
     if (started) drawPlasma(t);
+    if (performance.now() - lastActive > IDLE_MS) { running = false; return; }
     requestAnimationFrame(loop);
-  })();
+  }
+  wake();
 })();

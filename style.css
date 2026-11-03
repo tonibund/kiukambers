@@ -4,6 +4,11 @@
    dicke Konturen + harte Schatten wie auf dem Flyer.
    ============================================================ */
 
+/* Schriften lokal (keine Verbindung zu Google) */
+@font-face { font-family: 'Lilita One'; font-weight: 400; font-display: swap; src: url("fonts/lilita-one.woff2") format("woff2"); }
+@font-face { font-family: 'Permanent Marker'; font-weight: 400; font-display: swap; src: url("fonts/permanent-marker.woff2") format("woff2"); }
+@font-face { font-family: 'Rubik'; font-weight: 300 900; font-display: swap; src: url("fonts/rubik.woff2") format("woff2"); }
+
 :root {
   /* Flyer-Farben */
   --sky:    #BDE6FB;
@@ -578,6 +583,34 @@ p + p { margin-top: 14px; }
   font-size: 17px;
   color: var(--text-3);
 }
+.footer-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px 22px;
+  margin-bottom: 14px;
+  list-style: none;
+  font-family: var(--font-display);
+  font-size: 17px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.footer-nav a {
+  display: inline-block;
+  padding: 6px 0;
+  color: var(--indigo);
+  text-decoration: none;
+}
+.footer-nav a:hover { color: var(--hot); }
+.footer-wa { font-family: var(--font-body); font-size: 15px; font-weight: 500; margin-bottom: 10px; }
+.footer-wa a { color: var(--indigo); font-weight: 600; }
+
+/* 404-Seite */
+.notfound { text-align: center; padding-top: clamp(40px, 10vw, 100px); padding-bottom: clamp(40px, 10vw, 100px); }
+.notfound .ransom { cursor: default; }
+.notfound .big { font-family: var(--font-display); font-size: clamp(90px, 22vw, 180px); line-height: 1; color: var(--indigo); text-shadow: 6px 6px 0 var(--pink); }
+.notfound p { max-width: 34ch; margin: 12px auto 0; }
+.notfound h1 { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; color: var(--indigo); font-size: clamp(32px, 6vw, 52px); line-height: 1; margin-top: 8px; }
 
 /* ============================================================
    MAUSZEIGER WIE BEI OFFSPRING, IN NEONGRÜN (siehe script.js)

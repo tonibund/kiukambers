@@ -1,0 +1,6 @@
+Schriften von Google Fonts, lokal eingebunden.
+Lizenz: SIL Open Font License 1.1 (https://openfontlicense.org)
+
+- lilita-one.woff2        Lilita One
+- permanent-marker.woff2  Permanent Marker
+- rubik.woff2             Rubik (variabel, 300–900)
