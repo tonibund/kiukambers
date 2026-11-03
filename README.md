@@ -19,6 +19,8 @@ Reine statische Website (HTML + CSS + ein kleines JS, keine Build-Tools) — dir
 | `style.css` | Design, Farben, Schriften |
 | `script.js` | Plasma-Mauszeiger, beweglicher Titel |
 | `KIUKAMBERS.png` | Flyer Schlagzeugerin-Suche |
+| `favicon.svg`, `img/apple-touch-icon.png` | Icon im Browser-Tab / auf dem Handy-Homescreen |
+| `img/og.jpg` | Vorschaubild beim Teilen des Links |
 | `img/band.jpg` | Bandfoto auf der Startseite |
 | `img/toni.jpg` … `img/sina.jpg` | Profilbilder der Bandmitglieder |
 
